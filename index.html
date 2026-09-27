@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Real-time weather dashboard for searching any city and viewing live conditions."
+    />
+    <title>WeatherFlow Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true">☁️</div>
+          <div>
+            <p class="eyebrow">Live conditions</p>
+            <h1>WeatherFlow</h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="themeToggle" class="icon-button" type="button" aria-label="Toggle dark mode">
+            <span aria-hidden="true">🌙</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="dashboard" aria-live="polite">
+        <section class="search-panel panel">
+          <form id="searchForm" class="search-form" novalidate>
+            <label class="sr-only" for="cityInput">Search city</label>
+            <div class="input-shell">
+              <span class="search-icon" aria-hidden="true">🔎</span>
+              <input
+                id="cityInput"
+                name="city"
+                type="text"
+                placeholder="Search city..."
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+            <button id="searchButton" class="primary-button" type="submit">
+              Search
+            </button>
+          </form>
+          <div id="errorMessage" class="error-message" role="alert" aria-live="assertive"></div>
+        </section>
+
+        <section class="content-grid">
+          <div class="main-column">
+            <article id="weatherCard" class="weather-card panel">
+              <div class="content-header">
+                <div>
+                  <p id="locationLabel" class="location-label">Loading city...</p>
+                  <p id="countryLabel" class="secondary-label">Fetching weather</p>
+                </div>
+                <div id="statusBadge" class="status-pill">
+                  <span class="status-dot" aria-hidden="true"></span>
+                  Live • Updated recently
+                </div>
+              </div>
+
+              <div id="weatherLoading" class="weather-loading" aria-live="polite">
+                <div class="spinner" aria-hidden="true"></div>
+                <p>Fetching latest weather...</p>
+              </div>
+
+              <div id="weatherContent" class="weather-content hidden">
+                <div class="hero-weather">
+                  <div class="weather-symbol" id="weatherSymbol" aria-label="Weather icon">☀️</div>
+                  <div class="temperature-wrap">
+                    <div id="temperatureValue" class="temperature">--°</div>
+                    <div class="condition-meta">
+                      <p id="weatherCondition" class="condition">--</p>
+                      <p id="feelsLikeLabel" class="feels-like">Feels like --°</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="meta-row">
+                  <div class="meta-item">
+                    <span class="meta-label">Latitude</span>
+                    <strong id="latitudeValue">--</strong>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">Longitude</span>
+                    <strong id="longitudeValue">--</strong>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">Last updated</span>
+                    <strong id="lastUpdatedLabel">--</strong>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <section class="metrics-grid" aria-label="Weather metrics">
+              <article class="metric-card panel">
+                <div class="metric-icon" aria-hidden="true">💧</div>
+                <div>
+                  <p class="metric-label">Humidity</p>
+                  <h3 id="humidityValue">--</h3>
+                </div>
+              </article>
+
+              <article class="metric-card panel">
+                <div class="metric-icon" aria-hidden="true">💨</div>
+                <div>
+                  <p class="metric-label">Wind Speed</p>
+                  <h3 id="windSpeedValue">--</h3>
+                </div>
+              </article>
+
+              <article class="metric-card panel">
+                <div class="metric-icon" aria-hidden="true">🌡️</div>
+                <div>
+                  <p class="metric-label">Feels Like</p>
+                  <h3 id="feelsLikeValue">--</h3>
+                </div>
+              </article>
+
+              <article class="metric-card panel">
+                <div class="metric-icon" aria-hidden="true">🧭</div>
+                <div>
+                  <p class="metric-label">Pressure</p>
+                  <h3 id="pressureValue">--</h3>
+                </div>
+              </article>
+
+              <article class="metric-card panel">
+                <div class="metric-icon" aria-hidden="true">👁️</div>
+                <div>
+                  <p class="metric-label">Visibility</p>
+                  <h3 id="visibilityValue">--</h3>
+                </div>
+              </article>
+            </section>
+          </div>
+
+          <aside class="side-column">
+            <section class="panel side-panel">
+              <div class="side-header">
+                <h2>Recent searches</h2>
+              </div>
+              <div id="recentSearches" class="history-list" aria-live="polite"></div>
+            </section>
+
+            <section class="panel side-panel">
+              <div class="side-header favorite-header">
+                <h2>Favorite city</h2>
+                <button id="favoriteButton" class="secondary-button" type="button">☆ Add to favorites</button>
+              </div>
+              <div id="favoriteCityLabel" class="favorite-city">No favorite saved</div>
+            </section>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
